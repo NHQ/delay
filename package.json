@@ -1,0 +1,24 @@
+{
+  "name": "delay",
+  "version": "1.0.0",
+  "description": "a delay function for DPS / audio",
+  "main": "delay.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git:github.com:NHQ/delay.git"
+  },
+  "keywords": [
+    "delay",
+    "DSP",
+    "digital",
+    "delay",
+    "web",
+    "audio"
+  ],
+  "author": "johhnyscriptus",
+  "license": "freemium",
+  "readmeFilename": "README.md"
+}
