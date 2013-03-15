@@ -62,5 +62,6 @@ var delayNode = webaudio(audio, delayPedal);
 audioSourceBuffer.connect(delayNode);
 
 delayNode.connect(audio.destination);
-```
+
 audioSourceBuffer.start(0)
+```
