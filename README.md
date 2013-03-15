@@ -7,6 +7,8 @@ A Javascript Delay function with params:
 
 By default, delay creates a buffer large enough to change the delay time by double it's initial value. So if you want to change up your delay time, choose a interval of half your max and you will be g2g.
 
+npm install jdelay
+
 ## usage
 
 Initiate the delay with the values you want, It will return a function

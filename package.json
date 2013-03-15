@@ -1,5 +1,5 @@
 {
-  "name": "delay",
+  "name": "jdelay",
   "version": "1.0.0",
   "description": "a delay function for DPS / audio",
   "main": "delay.js",
