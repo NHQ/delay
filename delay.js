@@ -1,62 +1,72 @@
 var  funstance = require('funstance')
 ;
 
-module.exports = function(delay, feedback, mix){
-	
-  delay = delay || 1000;
+module.exports = function(delay, feedback, mix, bufferSize){
+		
+  delay = Math.floor(delay) || 0
 
   feedback = feedback || 0
 
   mix = mix || 1
 
-  var delay = new Delay(delay, feedback, mix)
+  bufferSize = bufferSize || delay * 2;
 
-  return funstance(delay, Sample)
+  if(bufferSize < delay * 2) bufferSize = delay * 2
 
-  function Delay(delay, feedback, mix){
+  var d = new Delay(delay, feedback, mix, bufferSize)
+
+  return funstance(d, Sample)
+
+  function Delay(delay, feedback, mix, bufferSize){
 			
 	  this.feedback = feedback;
 	
-	  this.mix = mix
+	  this.mix = mix;
 	
-	  this.delay = delay || 1000;
+	  this.delay = delay;
 
-	  this.buffer = new Float32Array(delay * 4);
-
-		var x;
-
-	  for(x in this.buffer) this.buffer[x] = 0;
+	  this.buffer = new Float32Array();
 
 	  this.writeOffset = 0;
 
-	  this.readOffset = this.writeOffset + this.delay - 1
+	  this.endPoint = (this.delay * 2)
+		
+	  this.readOffset = this.delay - 1
 	
  	};
 
 
   function Sample(sample, delay, feedback, mix){
-	
-	  delay = delay || this.delay
-	  feedback = feedback || this.feedback
-	  mix = mix || this.mix
 
-		var readOff = this.writeOffset + delay - 1;
-				
-    if (readOff >= this.buffer.length) readOff -= this.buffer.length;
+	  if(delay && delay !== this.delay){
+		
+		  if(delay * 2 > this.buffer.length) {
+	      var nb = new Float32Array(delay*2);
+	      nb.set(this.buffer, 0);
+	      this.buffer = nb		
+  		}
+		
+		  this.readOffset -= (this.delay - Math.floor(delay) - 1);
+			
+//		  if(this.readOffset >= this.buffer.length) this.readOffset
+		
+	    this.delay = Math.floor(delay);
+		
+	    this.endPoint = (this.delay * 2);
 
-    var val = this.buffer[readOff];
+  	}
 
-    sample += (val * this.mix);
+    if (this.readOffset >= this.endPoint) this.readOffset = 0;
 
-    this.buffer[this.writeOffset] = sample * this.feedback
+    sample += (this.buffer[this.readOffset] * this.mix);
 
-    this.writeOffset ++;
+    this.buffer[this.writeOffset] = sample * this.feedback;
 
-    this.readOffset ++;
+    this.writeOffset++;
 
-    if (this.writeOffset >= this.buffer.length) this.writeOffset = 0;
+    this.readOffset++;
 
- //   if (this.readOffset >= this.buffer.length) this.readOffset = 0;
+    if (this.writeOffset >= this.endPoint) this.writeOffset = 0;
 
     return sample
 
