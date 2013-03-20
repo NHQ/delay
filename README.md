@@ -1,10 +1,12 @@
 # Delay
 
-A Javascript Delay function with params:
+A Javascript Delay function. I think I got it right.
+
+The constructor takes params:
 * delay time **in samples**
 * feedback level
 * mix level
-* bufferSize - defaults to to whatever your delay time requires, but can be set to to higher
+* bufferSize - defaults to to whatever your delay time requires, but can be set to to higher so you can increase the delay time.
 
 You can change the delay time, feedback, and mix levels on the fly. If you set the delay to a higher value than the buffer can hold, it will create a larger buffer.
 
@@ -19,11 +21,11 @@ Initiate the delay with the values you want, It will return a function
 ```js
 var  audio = new webkitAudioContext();
 var  Delay = require('delay')
-,    delay = Delay(audio.sampleRate * 2	, 1, 1)
+,    delay = Delay(audio.sampleRate * 2	, 0, 1) // no feedback
 
 
 function delayPedal(time, index, sample){
-	var newDelayParam = time % .5 > .25 ? audio.sampleRate * 2 : audio.sampleRate * 4
+	var newDelayParam = time % .5 > .25 ? audio.sampleRate * 2 : audio.sampleRate * 4 // 2 & 4 second delays
 	// optionally, change delay, feedback and mix params on the fly when you call the delay function
 	var feedback = mix = null
 	var x = delay(sample, newDelayParam, feedback, mix)
@@ -44,7 +46,7 @@ var  Delay = require('./delay.js')
 ,    delay = Delay(audio.sampleRate / 64, .75, 1)
 ,    delay2 = Delay(audio.sampleRate / 4, .75, 1)
 ,    Reverb = Delay(222, .67, 1)
-,    webaudio = require('webaudio')
+,    webaudio = require('jsynth')
 ,		 amod = require('amod')
 , 	 osc = require('oscillators')()
 ;

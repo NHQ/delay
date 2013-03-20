@@ -15,7 +15,7 @@ var  Delay = require('./delay.js')
 ,    delay = Delay(audio.sampleRate / 64, .75, 1)
 ,    delay2 = Delay(audio.sampleRate / 4, .75, 1)
 ,    Reverb = Delay(222, .67, 1)
-,    webaudio = require('webaudio')
+,    webaudio = require('jsynth')
 ,		 amod = require('amod')
 , 	 osc = require('oscillators')()
 ;

@@ -47,9 +47,7 @@ module.exports = function(delay, feedback, mix, bufferSize){
   		}
 		
 		  this.readOffset -= (this.delay - Math.floor(delay) - 1);
-			
-//		  if(this.readOffset >= this.buffer.length) this.readOffset
-		
+					
 	    this.delay = Math.floor(delay);
 		
 	    this.endPoint = (this.delay * 2);
