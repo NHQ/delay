@@ -1,6 +1,6 @@
 var  funstance = require('funstance')
 ;
-
+window.arg;
 module.exports = function(delay, feedback, mix, bufferSize){
 		
   delay = Math.floor(delay) || 0
@@ -25,7 +25,7 @@ module.exports = function(delay, feedback, mix, bufferSize){
 	
 	  this.delay = delay;
 
-	  this.buffer = new Float32Array();
+	  this.buffer = new Float32Array(bufferSize);
 
 	  this.writeOffset = 0;
 

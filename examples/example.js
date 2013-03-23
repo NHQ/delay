@@ -11,7 +11,7 @@
 // open browser to http://localhost:11001 (make sure volum is up)
 
 var  audio = new webkitAudioContext();
-var  Delay = require('./delay.js')
+var  Delay = require('../delay.js')
 ,    delay = Delay(audio.sampleRate / 64, .75, 1)
 ,    delay2 = Delay(audio.sampleRate / 4, .75, 1)
 ,    Reverb = Delay(222, .67, 1)
