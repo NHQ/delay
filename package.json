@@ -1,6 +1,6 @@
 {
   "name": "jdelay",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "a delay function for DPS / audio",
   "main": "delay.js",
   "scripts": {
