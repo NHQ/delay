@@ -26,6 +26,8 @@ module.exports = function(delay, feedback, mix, bufferSize){
 	  this.mix = mix;
 	
 	  this.delay = delay;
+	
+	  this._sample = 0;
 
 	  this.buffer = new Float32Array(bufferSize);
 	
@@ -58,9 +60,9 @@ module.exports = function(delay, feedback, mix, bufferSize){
 
     if (this.readOffset >= this.endPoint) this.readOffset = 0;
 
-    sample += (this.buffer[this.readOffset] * this.mix);
+    this._sample = (this.buffer[this.readOffset] * this.mix);
 
-    this.buffer[this.writeOffset] = sample * this.feedback;
+    this.buffer[this.writeOffset] = sample + ( this._sample * this.feedback );
 
     this.writeOffset++;
 
@@ -68,7 +70,7 @@ module.exports = function(delay, feedback, mix, bufferSize){
 
     if (this.writeOffset >= this.endPoint) this.writeOffset = 0;
 
-    return sample
+    return this._sample
 
   };
 
