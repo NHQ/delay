@@ -1,6 +1,6 @@
 {
   "name": "jdelay",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "a delay function for DPS / audio",
   "main": "delay.js",
   "scripts": {
@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git:github.com:NHQ/delay.git"
   },
-  "dependencies" : {
-    "funstance":""
+  "dependencies": {
+    "funstance": ""
   },
   "keywords": [
     "delay",
