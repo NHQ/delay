@@ -1,5 +1,4 @@
-var  funstance = require('funstance')
-;
+var  funstance = require('funstance');
 
 module.exports = function(delay, feedback, mix, bufferSize){
 		
@@ -34,6 +33,8 @@ module.exports = function(delay, feedback, mix, bufferSize){
 	  this.endPoint = (this.delay * 2)
 		
 	  this.readOffset = this.delay + 1
+
+          this.readZero = 0;
 	
  	};
 
@@ -42,21 +43,27 @@ module.exports = function(delay, feedback, mix, bufferSize){
 
       var s = sample;
 
+      if(feedback) this.feedback = feedback;
+
+      if(mix) this.mix = mix;
+
       if(_delay && _delay !== this.delay){
 
-	  _delay = Math.max(0, _delay);
+	  _delay = Math.max(0, Math.floor(_delay));
 	  
 	  if(_delay * 2 > this.buffer.length) {
 
-	      var nb = new Float32Array(Math.floor(_delay)*3.5);
+	      var nb = new Float32Array(_delay*3.5);
 
 	      nb.set(this.buffer, 0);
 
 	      this.buffer = nb		
 
   	  }
+
+//	  if(_delay > this.delay) this.readZero = _delay - this.delay;
 	  
-	  this.delay = Math.floor(_delay);
+	  this.delay = _delay;
 	  
 	  this.endPoint = (this.delay * 2);
 
@@ -64,7 +71,7 @@ module.exports = function(delay, feedback, mix, bufferSize){
       
     if (this.readOffset >= this.endPoint) this.readOffset = 0;
 
-    sample += (this.buffer[this.readOffset] * this.mix);
+    sample += (this.readZero-- > 0) ? 0 : (this.buffer[this.readOffset] * this.mix);
 
     var write = s + (sample * this.feedback);
 

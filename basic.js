@@ -40,23 +40,29 @@ module.exports = function(delay, feedback, mix, bufferSize){
  	};
 
 
-  function Sample(sample, delay, feedback, mix){
+  function Sample(sample, _delay, feedback, mix){
 
-	  if(delay && delay !== this.delay){
-		
-		  if(delay * 2 > this.buffer.length) {
-	      var nb = new Float32Array(delay*2);
+      var s = sample;
+
+      if(_delay && _delay !== this.delay){
+
+	  _delay = Math.max(0, _delay);
+	  
+	  if(_delay * 2 > this.buffer.length) {
+
+	      var nb = new Float32Array(Math.floor(_delay)*3.5);
+
 	      nb.set(this.buffer, 0);
-	      this.buffer = nb		
-  		}
-		
-		  this.readOffset -= (this.delay - Math.floor(delay) - 1);
-					
-	    this.delay = Math.floor(delay);
-		
-	    this.endPoint = (this.delay * 2);
 
-  	}
+	      this.buffer = nb		
+
+  	  }
+	  
+	  this.delay = Math.floor(_delay);
+	  
+	  this.endPoint = (this.delay * 2);
+
+      }
 
     if (this.readOffset >= this.endPoint) this.readOffset = 0;
 
