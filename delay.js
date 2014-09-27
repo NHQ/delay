@@ -49,17 +49,17 @@ module.exports = function(delay, feedback, mix, bufferSize){
 
       if(_delay && _delay !== this.delay){
 
-	  _delay = Math.max(0, Math.floor(_delay));
+        _delay = Math.max(0, Math.floor(_delay));
 	  
-	  if(_delay * 2 > this.buffer.length) {
+        if(_delay * 2 > this.buffer.length) {
 
-	      var nb = new Float32Array(_delay*3.5);
+          var nb = new Float32Array(_delay*2);
 
-	      nb.set(this.buffer, 0);
+          nb.set(this.buffer, 0);
 
-	      this.buffer = nb		
+          this.buffer = nb		
 
-  	  }
+        }
 
 //	  if(_delay > this.delay) this.readZero = _delay - this.delay;
 	  
