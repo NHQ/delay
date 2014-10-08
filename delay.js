@@ -2,11 +2,11 @@ var  funstance = require('funstance');
 
 module.exports = function(delay, feedback, mix, bufferSize){
 		
-  var delay = Math.floor(delay)
+  var delay = Math.floor(delay || 1)
 
-  var feedback = feedback
+  var feedback = feedback || .001
 
-  var mix = mix
+  var mix = mix || .001
 
   var bufferSize = bufferSize || delay * 2;
 
@@ -47,8 +47,8 @@ module.exports = function(delay, feedback, mix, bufferSize){
 
       if(mix) this.mix = mix;
 
-      if(_delay && _delay !== this.delay){
-
+      if(_delay){
+        
         _delay = Math.max(0, Math.floor(_delay));
 	  
         if(_delay * 2 > this.buffer.length) {
@@ -61,15 +61,15 @@ module.exports = function(delay, feedback, mix, bufferSize){
 
         }
 
-//	  if(_delay > this.delay) this.readZero = _delay - this.delay;
+  	    //if(_delay > this.delay) this.readZero = _delay - this.delay;
+
+        this.delay = _delay;
 	  
-	  this.delay = _delay;
-	  
-	  this.endPoint = (this.delay * 2);
+        this.endPoint = (this.delay * 2);
 
       }
       
-    if (this.readOffset >= this.endPoint) this.readOffset = 0;
+      if (this.readOffset >= this.endPoint) this.readOffset = 0;
 
     sample += (this.readZero-- > 0) ? 0 : (this.buffer[this.readOffset] * this.mix);
 
